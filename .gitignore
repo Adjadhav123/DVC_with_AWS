@@ -1,8 +1,23 @@
-data
-models
-reports
+# DVC configuration - must be tracked
+!.dvc/
+.dvc/cache/
+.dvc/tmp/
+.dvcignore
 
+# Data directories tracked by DVC
+/data/raw/
+/data/interim/
+/data/processed/
+/models/
+# DVC tracking files
+*.dvc
+# But allow .dvc directory
+!.dvc
 
+# Reports (but allow the directory structure)
+/reports/*.json
+/reports/*.html
+/reports/*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -133,13 +148,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# DVC
-/data/raw/
-/data/interim/
-/data/processed/
-/models/
-*.dvc
 
 # MLflow
 mlruns/
