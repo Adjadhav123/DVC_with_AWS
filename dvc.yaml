@@ -4,21 +4,21 @@ stages:
     deps:
       - src/data_ingestion.py
     outs:
-      -data/raw
+      - data/raw
   
   preprocessing:
-    cmd: python preprocessing.py
+    cmd: python src/preprocessing.py
     deps:
       - src/preprocessing.py
       - data/raw
     outs:
-      - interim
+      - data/interim
 
   feature_engineering:
     cmd: python src/feature_engineering.py
     deps:
       - src/feature_engineering.py
-      - interim
+      - data/interim
     outs:
       - data/processed
   

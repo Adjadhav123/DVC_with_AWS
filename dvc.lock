@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 8e9359b2e08d96c0f113880c29497e77
+      size: 2207
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 98165b5509a5556d8047c18308a8b146.dir
+      size: 872767
+      nfiles: 2
+  preprocessing:
+    cmd: python src/preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 98165b5509a5556d8047c18308a8b146.dir
+      size: 872767
+      nfiles: 2
+    - path: src/preprocessing.py
+      hash: md5
+      md5: b509bca6ca5e5386af55a2f99e3dd491
+      size: 3777
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: e417f81ae1f88ef2dd18a09415dcabf2.dir
+      size: 666749
+      nfiles: 2
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: e417f81ae1f88ef2dd18a09415dcabf2.dir
+      size: 666749
+      nfiles: 2
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 5f9a11fdc8d667eac5030ca64421571b
+      size: 3222
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 41bcf68ee1d1477f85d1ea9af0edf527.dir
+      size: 172875
+      nfiles: 2
+  model_training:
+    cmd: python src/model_training.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 41bcf68ee1d1477f85d1ea9af0edf527.dir
+      size: 172875
+      nfiles: 2
+    - path: src/model_training.py
+      hash: md5
+      md5: bcaa8a55ccc5383892f615c515a64a73
+      size: 2987
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: a888b02a08814f84c11193e079e0f36f
+      size: 98453
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: data/processed/test_tfidf.csv
+      hash: md5
+      md5: 20202367f4511ebad18d0a534aa2c50b
+      size: 34558
+    - path: models/model.pkl
+      hash: md5
+      md5: a888b02a08814f84c11193e079e0f36f
+      size: 98453
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 40bcd7c00e89f019a2e4ddad95ad3f48
+      size: 3644
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: d79ff92b3dc6df9e071c0fea7956a3ad
+      size: 130
